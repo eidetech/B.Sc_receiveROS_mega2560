@@ -19,7 +19,7 @@ ros::NodeHandle nh;
 void messageCb( const std_msgs::Float32MultiArray& ps4Buttons){
   if(ps4Buttons.data[4] > 0.5)
   {
-    digitalWrite(13, HIGH); // blink the led
+    digitalWrite(13, HIGH);
   }else
   {
     digitalWrite(13, LOW);
