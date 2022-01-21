@@ -7,18 +7,17 @@
 #include <ros.h>
 #include <sensor_msgs/Joy.h>
 #include <std_msgs/Int32.h>
+#include <std_msgs/Float32MultiArray.h>
 
 
 //Creating a Nodehandle object
 ros::NodeHandle nh;
 
-//sensor_msgs::Joy ps4Buttons;
-
 // Creating a callback for the topic toggle_led, whenever a value come through this topic, this callback will execute
 // The callback will toggle the state of LED which is on PIN 13
 
-void messageCb( const std_msgs::Int32& ps4Buttons){
-  if(ps4Buttons.data == 1)
+void messageCb( const std_msgs::Float32MultiArray& ps4Buttons){
+  if(ps4Buttons.data[4] > 0.5)
   {
     digitalWrite(13, HIGH); // blink the led
   }else
@@ -28,7 +27,7 @@ void messageCb( const std_msgs::Int32& ps4Buttons){
 }
 
 //Creating a subscriber with a name toggle_led, and its callback
-ros::Subscriber<std_msgs::Int32> sub("/buttons", &messageCb);
+ros::Subscriber<std_msgs::Float32MultiArray> sub("/ps4data", &messageCb);
 
 //Setting PIN 13 as output and initializing ROS node and subscriber object
 void setup()
